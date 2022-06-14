@@ -11,7 +11,7 @@
 #include "utn.h"
 #include "censista.h"
 
-static int autoincrementarIdCencista();
+static int autoincrementarIdCensista();
 static int buscarEspacioLibre(Censista pArray[], int len);
 static void mostrarCabeceraDatoCensista();
 static void mostrarCensistaEncontrado(Censista unCensista, char* mensaje);
@@ -19,24 +19,14 @@ static int calcularEdad(int anioDeNacimiento, int anioActual);
 static int subMenuModificacion(Censista* unCensista);
 static int subMenuCampoFecha(Censista* unCensista);
 static int subMenuCampoDireccion(Censista* unCensista);
-static void altaForzadaCensista(Censista pArray[], int index,
-		char* nombre,
-		char* apellido,
-		int fechaDia,
-		int fechaMes,
-		int fechaAnio,
-		char* direccion,
-		int direccionNumero,
-		int estado,
-		int asignacion);
 
 /**
- * @fn int autoincrementarIdCencista()
+ * @fn int autoincrementarIdCensista()
  * @brief Autoincrementa el ID del censista.
  *
  * @return ID
  */
-static int autoincrementarIdCencista()
+static int autoincrementarIdCensista()
 {
 	static int valor = VALOR_ID;
 	valor++;
@@ -49,18 +39,18 @@ static int autoincrementarIdCencista()
  *
  * @param pArray: Array del tipo de dato estructura Censista a recorrer.
  * @param len: Tamanio del array a recorrer.
- * @param idCencista: Campo a comparar en array.
+ * @param idCensista: Campo a comparar en array.
  * @return i == SI ENCONTRO EL USUARIO || -1 == ERROR!
  */
-int buscarIndexPorId(Censista pArray[], int len, int idCencista)
+int buscarIndexPorId(Censista pArray[], int len, int idCensista)
 {
 	int retorno = -1;
 
-	if(pArray != NULL && len > 0 && idCencista > 0)
+	if(pArray != NULL && len > 0 && idCensista > 0)
 	{
 		for (int i = 0; i < len; i++)
 		{
-			if(pArray[i].idCencista == idCencista && pArray[i].isEmpty == 0)
+			if(pArray[i].idCensista == idCensista && pArray[i].isEmpty == 0)
 			{
 				retorno = i;
 				break;
@@ -333,7 +323,7 @@ static int subMenuModificacion(Censista* unCensista)
  * @param direccionNumero: Campo numero de direccion a forzar.
  * @param estado: Campo estado a forzar.
  */
-static void altaForzadaCensista(Censista pArray[], int index,
+void altaForzadaCensista(Censista pArray[], int index,
 		char* nombre,
 		char* apellido,
 		int fechaDia,
@@ -352,118 +342,10 @@ static void altaForzadaCensista(Censista pArray[], int index,
 	pArray[index].edad = calcularEdad(pArray[index].fechaNacimiento.anio, LIMITE_ANIO_MAXIMO);
 	strncpy(pArray[index].direccion.direccion, direccion, LEN_DIRECCION);
 	pArray[index].direccion.numero = direccionNumero;
-	pArray[index].idCencista = autoincrementarIdCencista();
+	pArray[index].idCensista = autoincrementarIdCensista();
 	pArray[index].estado = estado;
 	pArray[index].idZona = asignacion;
 	pArray[index].isEmpty = 0;
-}
-
-/**
- * @fn void cargarMenuPrincipal()
- * @brief Muestra el menu principal del programa.
- *
- */
-void cargarMenuPrincipal()
-{
-	int opcion;
-	int auxId;
-	int respuesta;
-	int auxIndex = 0;
-	int auxIndexZona = 0;
-
-	Censista arrayCensistas[LEN_CENSISTAS];
-	Zona arrayZonas[LEN_ZONAS];
-	inicializarCensista(arrayCensistas, LEN_CENSISTAS);
-	inicializarZona(arrayZonas, LEN_ZONAS);
-
-	altaForzadaCensista(arrayCensistas, auxIndex++, "Jose", "Ortigueira", 3, 8, 1985, "Ascasubi", 325, ACTIVO, 0);
-	altaForzadaCensista(arrayCensistas, auxIndex++, "Maria", "Barrionuevo", 16, 2, 1992, "Lavalle", 1658, ACTIVO, 0);
-	altaForzadaCensista(arrayCensistas, auxIndex++, "Marcos", "Garcia", 25, 12, 1989, "Mitre", 3425, ACTIVO, 0);
-	altaForzadaCensista(arrayCensistas, auxIndex++, "Mel", "Gibson", 27, 7, 1961, "Ayacucho", 654, ACTIVO, 0);
-	altaForzadaCensista(arrayCensistas, auxIndex++, "Rick", "Ashley", 5, 9, 1970, "Calchaqui", 5246, ACTIVO, 0);
-	altaForzadaCensista(arrayCensistas, auxIndex++, "Alexandra", "Britez", 14, 2, 1998, "Garibaldi", 768, ACTIVO, 0);
-
-	altaForzadaZona(arrayZonas, auxIndexZona++, "Alsina", "Rivadavia", "Moreno", "San Martin", 1, 1, 0, 0, 0);
-	altaForzadaZona(arrayZonas, auxIndexZona++, "Conesa", "Libertad", "Colon", "Belgrano", 1, 1, 0, 0, 0);
-	altaForzadaZona(arrayZonas, auxIndexZona++, "Zapiola", "Arenales", "Yapeyu", "Rodriguez Penia", 2, 1, 0, 0, 0);
-//	altaForzadaZona(arrayZonas, auxIndexZona++, "9", "147", "10", "146", 4, 2, 5, 23, 6);
-//	altaForzadaZona(arrayZonas, auxIndexZona++, "Alsina", "Rivadavia", "Moreno", "San Martin", LOCALIDAD_1_QUILMES, 1, 0, 0, 0);
-//	altaForzadaZona(arrayZonas, auxIndexZona++, "Alsina", "Rivadavia", "Moreno", "San Martin", LOCALIDAD_1_QUILMES, 1, 0, 0, 0);
-//	altaForzadaZona(arrayZonas, auxIndexZona++, "Alsina", "Rivadavia", "Moreno", "San Martin", LOCALIDAD_1_QUILMES, 1, 0, 0, 0);
-//	altaForzadaZona(arrayZonas, auxIndexZona++, "Alsina", "Rivadavia", "Moreno", "San Martin", LOCALIDAD_1_QUILMES, 1, 0, 0, 0);
-//	altaForzadaZona(arrayZonas, auxIndexZona++, "Alsina", "Rivadavia", "Moreno", "San Martin", LOCALIDAD_1_QUILMES, 1, 0, 0, 0);
-//	altaForzadaZona(arrayZonas, auxIndexZona++, "Alsina", "Rivadavia", "Moreno", "San Martin", LOCALIDAD_1_QUILMES, 1, 0, 0, 0);
-
-	do
-		{
-			utn_getInt(&opcion, MSJ_INPUT_MENU, ERROR_MSJ, 1, 9, REINTENTOS);
-			switch(opcion)
-			{
-				case 1: // ALTA CENSISTA
-					cargarCensista(arrayCensistas, LEN_CENSISTAS);
-					break;
-				case 2: // MODIFICACION CENSISTA
-					listarCensistas(arrayCensistas, LEN_CENSISTAS);
-					if(utn_getInt(&auxId, MSJ_INPUT_ID, ERROR_MSJ, VALOR_ID, 9999, REINTENTOS) == 0)
-					{
-						respuesta = modificarCensista(arrayCensistas, LEN_CENSISTAS, auxId);
-						if(respuesta == SI)
-						{
-							printf(MSJ_MODI_CONFIRMACION);
-						}
-						else if(respuesta == NO)
-						{
-							printf(MSJ_MODI_CONFIRMACION_ABORTADA);
-						}
-						else
-						{
-							printf(MSJ_ERROR_NO_SE_ENCONTRO_USUARIO);
-						}
-					}
-					break;
-				case 3: // BAJA CENSISTA
-					if(utn_getInt(&auxId, MSJ_INPUT_ID, ERROR_MSJ, VALOR_ID, 9999, REINTENTOS) == 0)
-					{
-						respuesta = bajaCensista(arrayCensistas, LEN_CENSISTAS, auxId);
-						if(respuesta == SI)
-						{
-							printf(MSJ_BAJA_CONFIRMACION);
-						}
-						else if(respuesta == NO)
-						{
-							printf(MSJ_BAJA_CONFIRMACION_ABORTADA);
-						}
-						else
-						{
-							printf(MSJ_ERROR_NO_SE_ENCONTRO_USUARIO);
-						}
-					}
-					break;
-				case 4: // ALTA ZONA
-					auxIndex = cargarZona(arrayZonas, LEN_ZONAS);
-					if(auxIndex != -1)
-					{
-						mostrarZonaEncontrada(arrayZonas[auxIndex], MSJ_ALTA_ZONA_CONFIRMACION);
-					}
-					break;
-				case 5: // ASIGNACION DE ZONA A CENSISTA
-					asignarCensistaAZona(arrayZonas, LEN_ZONAS, arrayCensistas, LEN_CENSISTAS);
-					break;
-				case 6: // CARGA DE DATOS
-					break;
-				case 7: // MOSTRAR CENSISTAS
-					listarCensistas(arrayCensistas, LEN_CENSISTAS);
-					break;
-				case 8: // MOSTRAR ZONAS
-					listarZonas(arrayZonas, LEN_ZONAS);
-					break;
-				case 9: // SALIR
-					printf(MSJ_FINAL);
-					break;
-			}
-
-		}while(opcion != 9);
-
 }
 
 /**
@@ -522,7 +404,7 @@ int cargarCensista(Censista pArray[], int len)
 				pArray[index].fechaNacimiento = auxFecha;
 				pArray[index].edad = calcularEdad(pArray[index].fechaNacimiento.anio, LIMITE_ANIO_MAXIMO);
 				pArray[index].direccion = auxDireccion;
-				pArray[index].idCencista = autoincrementarIdCencista();
+				pArray[index].idCensista = autoincrementarIdCensista();
 				pArray[index].estado = ACTIVO;
 				pArray[index].idZona = 0;
 				pArray[index].isEmpty = 0;
@@ -547,18 +429,18 @@ int cargarCensista(Censista pArray[], int len)
  *
  * @param pArray: Array del tipo de dato estructura Censista a recorrer.
  * @param len: Tamanio del array a recorrer.
- * @param idCencista: Campo a comparar/buscar en array.
+ * @param idCensista: Campo a comparar/buscar en array.
  * @return 0 == OK || -1 == ERROR!
  */
-int bajaCensista(Censista pArray[], int len, int idCencista)
+int bajaCensista(Censista pArray[], int len, int idCensista)
 {
 	int retorno = -1;
 	int index;
 	int respuesta;
 
-	if(pArray != NULL && len > 0 && idCencista > 0)
+	if(pArray != NULL && len > 0 && idCensista > 0)
 	{
-		index = buscarIndexPorId(pArray, len, idCencista);
+		index = buscarIndexPorId(pArray, len, idCensista);
 		if(index != -1)
 		{
 			mostrarCensistaEncontrado(pArray[index], MSJ_BAJA_PREGUNTA);
@@ -585,18 +467,18 @@ int bajaCensista(Censista pArray[], int len, int idCencista)
  *
  * @param pArray: Array del tipo de dato estructura Censista a recorrer.
  * @param len: Tamanio del array a recorrer.
- * @param idCencista: Campo a comparar/buscar en array.
+ * @param idCensista: Campo a comparar/buscar en array.
  * @return 0 == OK || -1 == ERROR!
  */
-int modificarCensista(Censista pArray[], int len, int idCencista)
+int modificarCensista(Censista pArray[], int len, int idCensista)
 {
 	int retorno = -1;
 	int index;
 	int respuesta;
 
-	if(pArray != NULL && len > 0 && idCencista > 0)
+	if(pArray != NULL && len > 0 && idCensista > 0)
 	{
-		index = buscarIndexPorId(pArray, len, idCencista);
+		index = buscarIndexPorId(pArray, len, idCensista);
 		if(index != -1)
 		{
 			mostrarCensistaEncontrado(pArray[index], MSJ_MODI_PREGUNTA);
@@ -657,7 +539,7 @@ void mostrarCensista(Censista unCensista)
 	if(unCensista.isEmpty == 0)
 	{
 		printf(" | %-5d | %-15s | %-15s | %2d/%2d/%4d | %4d | %-20s %5d | %-8s | %-13s |\n",
-				unCensista.idCencista,
+				unCensista.idCensista,
 				unCensista.nombre,
 				unCensista.apellido,
 				unCensista.fechaNacimiento.dia,
@@ -769,27 +651,6 @@ int ordenarCensistaPorCampo(Censista pArray[], int len)
 	return retorno;
 }
 
-int asignarCensistaAZona(Zona pArrayZonas[], int lenZonas, Censista pArrayCensistas[], int lenCensistas)
-{
-	int retorno = -1;
-	int auxIdZona;
-	int auxIdCensista;
-	int index;
-
-	listarZonas(pArrayZonas, lenZonas);
-	if(utn_getInt(&auxIdZona, " > Ingrese el ID de la zona: ", ERROR_MSJ, VALOR_ID_ZONA, 9999, REINTENTOS) == 0)
-	{
-		listarCensistas(pArrayCensistas, lenCensistas);
-		if(utn_getInt(&auxIdCensista, " > Ingrese el ID del censista a asignar: ", ERROR_MSJ, 1000, 9999, REINTENTOS) == 0)
-		{
-			index = buscarIndexPorId(pArrayCensistas, lenCensistas, auxIdCensista);
-			pArrayCensistas[index].idZona = auxIdZona;
-			retorno = 0;
-		}
-	}
-
-	return retorno;
-}
 
 // 3:43 informes: acumulador, un contador, maximo, minimo
 

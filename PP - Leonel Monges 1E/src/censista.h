@@ -8,7 +8,7 @@
 #ifndef CENSISTA_H_
 #define CENSISTA_H_
 
-#include "zona.h"
+#include "utn.h"
 
 #define VALOR_ID 1000
 #define LEN_CENSISTAS 10
@@ -77,7 +77,7 @@
 #define PENDIENTE 1
 
 typedef struct {
-	int idCencista;
+	int idCensista;
 	char nombre[LEN_NOMBRE];
 	char apellido[LEN_NOMBRE];
 	eFecha fechaNacimiento;
@@ -97,16 +97,16 @@ int modificarCensista(Censista pArray[], int len, int idCencista);
 void mostrarCensista(Censista unCencista);
 int listarCensistas(Censista pArray[], int len);
 
-int asignarCensistaAZona(Zona pArrayZonas[], int lenZonas, Censista pArrayCensistas[], int lenCensistas);
+void altaForzadaCensista(Censista pArray[], int index,
+		char* nombre,
+		char* apellido,
+		int fechaDia,
+		int fechaMes,
+		int fechaAnio,
+		char* direccion,
+		int direccionNumero,
+		int estado,
+		int asignacion);
 
-//void altaForzadaCensista(Censista pArray[], int index,
-//		char* nombre,
-//		char* apellido,
-//		int fechaDia,
-//		int fechaMes,
-//		int fechaAnio,
-//		char* direccion,
-//		int direccionNumero,
-//		int estado);
 
 #endif /* CENSISTA_H_ */

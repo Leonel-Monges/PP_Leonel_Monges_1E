@@ -69,14 +69,7 @@ int inicializarZona(Zona pArray[], int len);
 int cargarZona(Zona pArray[], int len);
 void formatearLocalidades(int numLocalidad, char* localidad);
 void formatearEstadoZona(int numEstado, char* estado);
-// void formatearAsignacionZona(int estado, Censista unCensista, char* asignacion);
-void mostrarZona(Zona unaZona);
-
-// int buscarIndexPorIdZona(Censista pArray[], int len, int idZona);
-
-int listarZonas(Zona pArray[], int len);
-
-void mostrarZonaEncontrada(Zona unaZona, char* mensaje);
+void mostrarCabeceraDatosZona();
 
 void formatearCamposCensadosZona(int estado,
 		int cantPresencial,

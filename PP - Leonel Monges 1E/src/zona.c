@@ -13,7 +13,6 @@
 
 static int autoincrementarIdZona();
 static int buscarEspacioLibre(Zona pArray[], int len);
-static void mostrarCabeceraDatosZona();
 
 /**
  * @fn int autoincrementarIdZona()
@@ -53,28 +52,6 @@ static int buscarEspacioLibre(Zona pArray[], int len)
 	}
 
 	return retorno;
-}
-
-/**
- * @fn void mostrarCabeceraDatosZona()
- * @brief  Muestra el encabezado de la Zona.
- *
- */
-static void mostrarCabeceraDatosZona()
-{
-	printf("\n | %-4s | %-20s | %-10s | %-11s | %-15s | %-15s | %-15s | %-15s | %16s | %13s | %14s |\n",
-			CABECERA_ID_ZONA,
-			CABECERA_NOMBRE_APELLIDO_CENCISTA,
-			CABECERA_ESTADO,
-			CABECERA_LOCALIDAD,
-			CABECERA_CALLE1,
-			CABECERA_CALLE2,
-			CABECERA_CALLE3,
-			CABECERA_CALLE4,
-			CABECERA_CANT_PRESENCIAL,
-			CABECERA_CANT_VIRTUAL,
-			CABECERA_CANT_AUSENTES);
-	printf(CABECERA_LINEA_SEPARADORA_ZONA);
 }
 
 // ---------------------------------------------------------------------- //
@@ -203,27 +180,8 @@ void formatearEstadoZona(int numEstado, char* estado)
 	}
 }
 
-///**
-// * @fn void formatearAsignacionZona(int, Censista, char*)
-// * @brief
-// *
-// * @param estado
-// * @param unCensista
-// * @param asignacion
-// */
-//void formatearAsignacionZona(int estado, Censista unCensista, char* asignacion)
-//{
-//	if(estado == PENDIENTE)
-//	{
-//		strcpy(asignacion, "SIN ASIGNAR");
-//	}
-//	else
-//	{
-//		strcpy(asignacion, unCensista.nombre);
-//		strcat(asignacion, " ");
-//		strcat(asignacion, unCensista.apellido);
-//	}
-//}
+
+
 
 /**
  * @fn void formatearCamposCensadosZona(int, int, int, int, char*, char*, char*)
@@ -262,79 +220,6 @@ void formatearCamposCensadosZona(int estado,
 	}
 }
 
-/**
- * @fn void mostrarCensista(Zona, Censista)
- * @brief Muestra los datos respectivos de una zona.
- *
- * @param unaZona: Tipo de dato estructura Zona a mostrar.
- * @param unCensista: Tipo de dato estructura Censista a mostrar.
- */
-void mostrarZona(Zona unaZona)
-{
-	char auxLocalidad[15];
-	char auxEstadoZona[15];
-	char auxCantPresenciales[15];
-	char auxCantVirtuales[15];
-	char auxCantAusentes[15];
-	char auxAsignado[30];
-
-	if(unaZona.estadoZona == PENDIENTE)
-	{
-		strcpy(auxAsignado, "SIN ASIGNAR");
-	}
-	// formatearAsignacionZona(unaZona.estadoZona, unCensista, auxAsignado);
-
-	formatearEstadoZona(unaZona.estadoZona, auxEstadoZona);
-	formatearLocalidades(unaZona.localidad, auxLocalidad);
-	formatearCamposCensadosZona(unaZona.estadoZona,
-			unaZona.cantCensadosPresencial,
-			unaZona.cantCensadosVirtual,
-			unaZona.cantAusentes,
-			auxCantPresenciales,
-			auxCantVirtuales,
-			auxCantAusentes);
-
-	if(unaZona.isEmpty == 0)
-	{
-		printf(" | %-4d | %-20s | %-10s | %-11s | %-15s | %-15s | %-15s | %-15s | %-16s | %-13s | %-14s |\n",
-				unaZona.idZona,
-				auxAsignado,
-				auxEstadoZona,
-				auxLocalidad,
-				unaZona.calle1,
-				unaZona.calle2,
-				unaZona.calle3,
-				unaZona.calle4,
-				auxCantPresenciales,
-				auxCantVirtuales,
-				auxCantAusentes);
-	}
-}
-
-/**
- * @fn int listarZonas(Zona[], int)
- * @brief Muestra el listado completo de las Zonas.
- *
- * @param pArray: Array del tipo de dato estructura Zona a recorrer.
- * @param len: Tamanio del array a recorrer.
- * @return 0 == OK || -1 == ERROR!
- */
-int listarZonas(Zona pArray[], int len)
-{
-	int retorno = -1;
-
-	if(pArray != NULL && len > 0)
-	{
-		mostrarCabeceraDatosZona();
-		for (int i = 0; i < len; i++)
-		{
-			mostrarZona(pArray[i]);
-		}
-		retorno = 0;
-	}
-
-	return retorno;
-}
 
 /**
  * @fn void altaForzadaZona(Zona[], int, char*, char*, char*, char*, int, int, int, int, int)
@@ -404,16 +289,25 @@ void altaForzadaZona(Zona pArray[], int index,
 //	return retorno;
 //}
 
+
 /**
- * @fn void mostrarZonaEncontrada(Zona, char*)
- * @brief
+ * @fn void mostrarCabeceraDatosZona()
+ * @brief  Muestra el encabezado de la Zona.
  *
- * @param unaZona: Tipo de dato estructura Zona a mostrar.
- * @param mensaje:  Mensaje a ser mostrado al usuario, junto con el datos encontrados.
  */
-void mostrarZonaEncontrada(Zona unaZona, char* mensaje)
+void mostrarCabeceraDatosZona()
 {
-	printf(mensaje);
-	mostrarCabeceraDatosZona();
-	mostrarZona(unaZona);
+	printf("\n | %-4s | %-20s | %-10s | %-11s | %-15s | %-15s | %-15s | %-15s | %16s | %13s | %14s |\n",
+			CABECERA_ID_ZONA,
+			CABECERA_NOMBRE_APELLIDO_CENCISTA,
+			CABECERA_ESTADO,
+			CABECERA_LOCALIDAD,
+			CABECERA_CALLE1,
+			CABECERA_CALLE2,
+			CABECERA_CALLE3,
+			CABECERA_CALLE4,
+			CABECERA_CANT_PRESENCIAL,
+			CABECERA_CANT_VIRTUAL,
+			CABECERA_CANT_AUSENTES);
+	printf(CABECERA_LINEA_SEPARADORA_ZONA);
 }
