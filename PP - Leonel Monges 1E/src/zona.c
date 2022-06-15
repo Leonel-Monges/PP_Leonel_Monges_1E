@@ -180,9 +180,6 @@ void formatearEstadoZona(int numEstado, char* estado)
 	}
 }
 
-
-
-
 /**
  * @fn void formatearCamposCensadosZona(int, int, int, int, char*, char*, char*)
  * @brief
@@ -219,7 +216,6 @@ void formatearCamposCensadosZona(int estado,
 		sprintf(strCantAusentes, "%d", cantAusentes);
 	}
 }
-
 
 /**
  * @fn void altaForzadaZona(Zona[], int, char*, char*, char*, char*, int, int, int, int, int)
@@ -261,35 +257,6 @@ void altaForzadaZona(Zona pArray[], int index,
 	pArray[index].isEmpty = 0;
 }
 
-///**
-// * @fn int buscarIndexPorId(Censista[], int, int)
-// * @brief Se encarga de encontrar el indice del dato guardado mediante el uso del su ID.
-// *
-// * @param pArray: Array del tipo de dato estructura Censista a recorrer.
-// * @param len: Tamanio del array a recorrer.
-// * @param idCencista: Campo a comparar en array.
-// * @return i == SI ENCONTRO EL USUARIO || -1 == ERROR!
-// */
-//int buscarIndexPorIdZona(Censista pArray[], int len, int idZona)
-//{
-//	int retorno = -1;
-//
-//	if(pArray != NULL && len > 0 && idZona > 0)
-//	{
-//		for(int i = 0; i < len; i++)
-//		{
-//			if(pArray[i].idZona == idZona && pArray[i].isEmpty == 0)
-//			{
-//				retorno = i;
-//				break;
-//			}
-//		}
-//	}
-//
-//	return retorno;
-//}
-
-
 /**
  * @fn void mostrarCabeceraDatosZona()
  * @brief  Muestra el encabezado de la Zona.
@@ -299,7 +266,7 @@ void mostrarCabeceraDatosZona()
 {
 	printf("\n | %-4s | %-20s | %-10s | %-11s | %-15s | %-15s | %-15s | %-15s | %16s | %13s | %14s |\n",
 			CABECERA_ID_ZONA,
-			CABECERA_NOMBRE_APELLIDO_CENCISTA,
+			CABECERA_NOMBRE_APELLIDO_CENSISTA,
 			CABECERA_ESTADO,
 			CABECERA_LOCALIDAD,
 			CABECERA_CALLE1,
@@ -310,4 +277,32 @@ void mostrarCabeceraDatosZona()
 			CABECERA_CANT_VIRTUAL,
 			CABECERA_CANT_AUSENTES);
 	printf(CABECERA_LINEA_SEPARADORA_ZONA);
+}
+
+/**
+ * @fn int buscarIndexZonaPorId(Zona[], int, int)
+ * @brief Se encarga de encontrar el indice del dato guardado mediante el uso del su ID.
+ *
+ * @param pArray: Array del tipo de dato estructura Zona a recorrer.
+ * @param len: Tamanio del array a recorrer.
+ * @param idCensista: Campo a comparar en array.
+ * @return i == SI ENCONTRO EL USUARIO || -1 == ERROR!
+ */
+int buscarIndexZonaPorId(Zona pArray[], int len, int idZona)
+{
+	int retorno = -1;
+
+	if(pArray != NULL && len > 0 && idZona > 0)
+	{
+		for (int i = 0; i < len; i++)
+		{
+			if(pArray[i].idZona == idZona && pArray[i].isEmpty == 0)
+			{
+				retorno = i;
+				break;
+			}
+		}
+	}
+
+	return retorno;
 }

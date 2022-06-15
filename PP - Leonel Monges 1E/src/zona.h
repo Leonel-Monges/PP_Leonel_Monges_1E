@@ -35,7 +35,7 @@
 
 
 #define CABECERA_ID_ZONA "ID"
-#define CABECERA_NOMBRE_APELLIDO_CENCISTA "CENCISTA ENCARGADO"
+#define CABECERA_NOMBRE_APELLIDO_CENSISTA "CENSISTA ENCARGADO"
 #define CABECERA_ESTADO "ESTADO"
 #define CABECERA_LOCALIDAD "LOCALIDAD"
 #define CABECERA_CALLE1 "CALLE 1"
@@ -70,6 +70,7 @@ int cargarZona(Zona pArray[], int len);
 void formatearLocalidades(int numLocalidad, char* localidad);
 void formatearEstadoZona(int numEstado, char* estado);
 void mostrarCabeceraDatosZona();
+int buscarIndexZonaPorId(Zona pArray[], int len, int idZona);
 
 void formatearCamposCensadosZona(int estado,
 		int cantPresencial,

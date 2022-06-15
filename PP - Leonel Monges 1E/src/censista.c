@@ -1,5 +1,5 @@
 /*
- * cencista.c
+ * censista.c
  *
  *  Created on: 17 may. 2022
  *      Author: Sistemas4
@@ -14,7 +14,6 @@
 static int autoincrementarIdCensista();
 static int buscarEspacioLibre(Censista pArray[], int len);
 static void mostrarCabeceraDatoCensista();
-static void mostrarCensistaEncontrado(Censista unCensista, char* mensaje);
 static int calcularEdad(int anioDeNacimiento, int anioActual);
 static int subMenuModificacion(Censista* unCensista);
 static int subMenuCampoFecha(Censista* unCensista);
@@ -34,7 +33,7 @@ static int autoincrementarIdCensista()
 }
 
 /**
- * @fn int buscarIndexPorId(Censista[], int, int)
+ * @fn int buscarIndexCensistaPorId(Censista[], int, int)
  * @brief Se encarga de encontrar el indice del dato guardado mediante el uso del su ID.
  *
  * @param pArray: Array del tipo de dato estructura Censista a recorrer.
@@ -42,7 +41,7 @@ static int autoincrementarIdCensista()
  * @param idCensista: Campo a comparar en array.
  * @return i == SI ENCONTRO EL USUARIO || -1 == ERROR!
  */
-int buscarIndexPorId(Censista pArray[], int len, int idCensista)
+int buscarIndexCensistaPorId(Censista pArray[], int len, int idCensista)
 {
 	int retorno = -1;
 
@@ -105,20 +104,6 @@ static void mostrarCabeceraDatoCensista()
 			CABECERA_ESTADO,
 			CABECERA_ASIGNACION);
 	printf(CABECERA_LINEA_SEPARADORA);
-}
-
-/**
- * @fn void mostrarCensistaEncontrado(Censista, char*)
- * @brief Muestra los datos de un usuario Censista.
- *
- * @param unCensista: Tipo de dato estructura Censista a mostrar.
- * @param mensaje: Mensaje a ser mostrado al usuario, junto con el datos encontrados.
- */
-static void mostrarCensistaEncontrado(Censista unCensista, char* mensaje)
-{
-	printf(mensaje);
-	mostrarCabeceraDatoCensista();
-	mostrarCensista(unCensista);
 }
 
 /**
@@ -440,7 +425,7 @@ int bajaCensista(Censista pArray[], int len, int idCensista)
 
 	if(pArray != NULL && len > 0 && idCensista > 0)
 	{
-		index = buscarIndexPorId(pArray, len, idCensista);
+		index = buscarIndexCensistaPorId(pArray, len, idCensista);
 		if(index != -1)
 		{
 			mostrarCensistaEncontrado(pArray[index], MSJ_BAJA_PREGUNTA);
@@ -478,7 +463,7 @@ int modificarCensista(Censista pArray[], int len, int idCensista)
 
 	if(pArray != NULL && len > 0 && idCensista > 0)
 	{
-		index = buscarIndexPorId(pArray, len, idCensista);
+		index = buscarIndexCensistaPorId(pArray, len, idCensista);
 		if(index != -1)
 		{
 			mostrarCensistaEncontrado(pArray[index], MSJ_MODI_PREGUNTA);
@@ -551,6 +536,20 @@ void mostrarCensista(Censista unCensista)
 				auxEstadoCencista,
 				auxEstadoAsignacionZona);
 	}
+}
+
+/**
+ * @fn void mostrarCensistaEncontrado(Censista, char*)
+ * @brief Muestra los datos de un usuario Censista.
+ *
+ * @param unCensista: Tipo de dato estructura Censista a mostrar.
+ * @param mensaje: Mensaje a ser mostrado al usuario, junto con el datos encontrados.
+ */
+void mostrarCensistaEncontrado(Censista unCensista, char* mensaje)
+{
+	printf(mensaje);
+	mostrarCabeceraDatoCensista();
+	mostrarCensista(unCensista);
 }
 
 /**
@@ -651,9 +650,4 @@ int ordenarCensistaPorCampo(Censista pArray[], int len)
 	return retorno;
 }
 
-
 // 3:43 informes: acumulador, un contador, maximo, minimo
-
-
-
-

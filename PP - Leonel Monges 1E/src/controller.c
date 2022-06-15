@@ -5,10 +5,11 @@
  *      Author: Sistemas4
  */
 
+#include "controller.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "controller.h"
 #include "utn.h"
 
 int cargarMenu(void)
@@ -58,7 +59,7 @@ void cargarMenuPrincipal()
 
 	do
 		{
-			utn_getInt(&opcion, MSJ_INPUT_MENU, ERROR_MSJ, 1, 9, REINTENTOS);
+			utn_getInt(&opcion, MSJ_INPUT_MENU, ERROR_MSJ, 1, 10, REINTENTOS);
 			switch(opcion)
 			{
 				case 1: // ALTA CENSISTA
@@ -115,6 +116,7 @@ void cargarMenuPrincipal()
 					asignarCensistaAZona(arrayZonas, LEN_ZONAS, arrayCensistas, LEN_CENSISTAS);
 					break;
 				case 6: // CARGA DE DATOS
+					cargarDatos(arrayZonas, arrayCensistas, LEN_ZONAS, LEN_CENSISTAS);
 					break;
 				case 7: // MOSTRAR CENSISTAS
 					listarCensistas(arrayCensistas, LEN_CENSISTAS);
@@ -122,12 +124,15 @@ void cargarMenuPrincipal()
 				case 8: // MOSTRAR ZONAS
 					listarZonas(arrayZonas, arrayCensistas, LEN_ZONAS, LEN_CENSISTAS);
 					break;
-				case 9: // SALIR
+				case 9: // INFORMES
+					printf(" Son los informes!\n");
+					break;
+				case 10: // SALIR
 					printf(MSJ_FINAL);
 					break;
 			}
 
-		}while(opcion != 9);
+		}while(opcion != 10);
 
 }
 
@@ -146,21 +151,20 @@ int asignarCensistaAZona(Zona pArrayZonas[], int lenZonas, Censista pArrayCensis
 	int retorno = -1;
 	int auxIdZona;
 	int auxIdCensista;
-	int index;
+	int indexCensista;
+	int indexZona;
 
 	listarZonas(pArrayZonas, pArrayCensistas, lenZonas, lenCensistas);
 	if(utn_getInt(&auxIdZona, "\n > Ingrese el ID de la zona: ", ERROR_MSJ, VALOR_ID_ZONA, 9999, REINTENTOS) == 0)
 	{
-//		buscarIndexPorId(pArray, len, idCensista) crear una funcion de buscar el indice  del arrayzona
+		indexZona = buscarIndexZonaPorId(pArrayZonas, lenZonas, auxIdZona);
 		listarCensistas(pArrayCensistas, lenCensistas);
 		if(utn_getInt(&auxIdCensista, "\n > Ingrese el ID del censista a asignar: ", ERROR_MSJ, 1000, 9999, REINTENTOS) == 0)
 		{
-			index = buscarIndexPorId(pArrayCensistas, lenCensistas, auxIdCensista);
-			pArrayCensistas[index].idZona = auxIdZona;
-
-			mostrarZonaEncontrada(" Asignacion de zona realizada!\n",
-					pArrayZonas[auxIdZona], pArrayCensistas, lenCensistas);
-
+			indexCensista = buscarIndexCensistaPorId(pArrayCensistas, lenCensistas, auxIdCensista);
+			pArrayCensistas[indexCensista].idZona = auxIdZona;
+			pArrayCensistas[indexCensista].estado = ACTIVO;
+			mostrarZonaEncontrada("\n ~ Asignacion de zona realizada!\n", pArrayZonas[indexZona], pArrayCensistas, lenCensistas);
 			retorno = 0;
 		}
 	}
@@ -281,23 +285,66 @@ void formatearAsignacionZonaXCensista(char* censistaAsignado, Zona unaZona, Cens
 		}
 	}
 }
-// * @fn void formatearAsignacionZona(int, Censista, char*)
-// * @brief
-// *
-// * @param estado
-// * @param unCensista
-// * @param asignacion
-// */
-//void formatearAsignacionZona(int estado, Censista unCensista, char* asignacion)
-//{
-//	if(estado == PENDIENTE)
-//	{
-//		strcpy(asignacion, "SIN ASIGNAR");
-//	}
-//	else
-//	{
-//		strcpy(asignacion, unCensista.nombre);
-//		strcat(asignacion, " ");
-//		strcat(asignacion, unCensista.apellido);
-//	}
-//}
+
+/**
+ * @fn int cargarDatos(Zona[], Censista[], int, int)
+ * @brief
+ *
+ * @param pArrayZonas
+ * @param pArrayCensistas
+ * @param lenZonas
+ * @param lenCensistas
+ * @return
+ */
+int cargarDatos(Zona pArrayZonas[], Censista pArrayCensistas[], int lenZonas, int lenCensistas)
+{
+	int retorno = -1;
+	int auxIdCensista;
+	int indexCensista = -1;
+	int indexZona = -1;
+
+	listarCensistas(pArrayCensistas, lenCensistas);
+	if(utn_getInt(&auxIdCensista, "\n > Ingrese el ID del censista: ", ERROR_MSJ, VALOR_ID, 9999, REINTENTOS) == 0)
+	{
+		indexCensista = buscarIndexCensistaPorId(pArrayCensistas, lenCensistas, auxIdCensista);
+		if(indexCensista != -1)
+		{
+			indexZona = buscarIndexZonaPorId(pArrayZonas, lenZonas, pArrayCensistas[indexCensista].idZona);
+			if(indexZona != 1)
+			{
+				mostrarZonaEncontrada("\n ~ Zona Asignada:\n", pArrayZonas[indexZona], pArrayCensistas, lenCensistas);
+				if(submenuCargaDatos(&pArrayZonas[indexZona], &pArrayCensistas[indexCensista]) == 0)
+				{
+					mostrarZonaEncontrada("\n ~ Datos completos de zona asignada!\n", pArrayZonas[indexZona], pArrayCensistas, lenCensistas);
+					mostrarCensistaEncontrado(pArrayCensistas[indexCensista], "\n ~ Datos del censista actualizado!\n");
+					retorno = 0;
+				}
+			}
+		}
+	}
+
+	return retorno;
+}
+
+int submenuCargaDatos(Zona* unaZona, Censista* unCensista)
+{
+	int retorno = -1;
+	int auxCensadosPresencial;
+	int auxCensadosVirtual;
+	int auxAusentes;
+
+	if(	utn_getInt(&auxCensadosPresencial, "\n > Ingrese la cantidad de censados presenciales: ", ERROR_MSJ, 0, 999, REINTENTOS) == 0 &&
+		utn_getInt(&auxCensadosVirtual, "\n > Ingrese la cantidad de censados virtuales: ", ERROR_MSJ, 0, 999, REINTENTOS) == 0 &&
+		utn_getInt(&auxAusentes, "\n > Ingrese la cantidad de ausentes: ", ERROR_MSJ, 0, 999, REINTENTOS) == 0)
+	{
+		unaZona->cantCensadosPresencial = auxCensadosPresencial;
+		unaZona->cantCensadosVirtual = auxCensadosVirtual;
+		unaZona->cantAusentes = auxAusentes;
+		unaZona->estadoZona = FINALIZADO;
+		unCensista->estado = LIBERADO;
+//		unCensista->idZona = 0;
+		retorno = 0;
+	}
+
+	return retorno;
+}

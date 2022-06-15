@@ -1,5 +1,5 @@
 /*
- * cencista.h
+ * censista.h
  *
  *  Created on: 17 may. 2022
  *      Author: Sistemas4
@@ -15,7 +15,7 @@
 #define LEN_NOMBRE 30
 
 // Mensaje Inicio
-#define MSJ_INPUT_MENU "\n\n --- PP Leonel Monges (1E) ---\n --- Sistema de censos 2022 ---\n\n 1. Ingresar datos de un nuevo censista\n 2. Modificar datos del censista\n 3. Eliminar datos de un censista\n 4. Cargar zona\n 5. Asignar  zona a censista\n 6. Carga de datos\n 7. Mostrar censistas.\n 8. Mostrar zonas\n 9. Salir\n\n > Ingrese opcion: "
+#define MSJ_INPUT_MENU "\n\n --- PP Leonel Monges (1E) ---\n --- Sistema de censos 2022 ---\n\n 1.  Ingresar datos de un nuevo censista.\n 2.  Modificar datos del censista.\n 3.  Eliminar datos de un censista.\n 4.  Cargar zona.\n 5.  Asignar  zona a censista.\n 6.  Carga de datos.\n 7.  Mostrar censistas.\n 8.  Mostrar zonas.\n 9.  Informes\n 10. Salir.\n\n > Ingrese opcion: "
 
 // Campos Imputs
 #define MSJ_INPUT_NOMBRE "\n > Ingrese nombre: "
@@ -89,12 +89,13 @@ typedef struct {
 }Censista;
 
 void cargarMenuPrincipal();
-int buscarIndexPorId(Censista pArray[], int len, int idCencista);
+int buscarIndexCensistaPorId(Censista pArray[], int len, int idCensista);
 int inicializarCensista(Censista pArray[], int len);
 int cargarCensista(Censista pArray[], int len);
 int bajaCensista(Censista pArray[], int len, int idCencista);
 int modificarCensista(Censista pArray[], int len, int idCencista);
 void mostrarCensista(Censista unCencista);
+void mostrarCensistaEncontrado(Censista unCensista, char* mensaje);
 int listarCensistas(Censista pArray[], int len);
 
 void altaForzadaCensista(Censista pArray[], int index,

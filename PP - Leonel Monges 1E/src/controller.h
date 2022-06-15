@@ -18,5 +18,7 @@ void mostrarZona(Zona unaZona, Censista pArrayCensistas[], int lenArrayCensistas
 int listarZonas(Zona pArrayZonas[], Censista pArrayCensistas[], int lenZonas, int lenCensistas);
 void mostrarZonaEncontrada(char* mensaje, Zona unaZona, Censista pArrayCensistas[], int lenArrayCensistas);
 void formatearAsignacionZonaXCensista(char* censistaAsignado, Zona unaZona, Censista pArrayCensistas[], int lenCensistas);
+int cargarDatos(Zona pArrayZonas[], Censista pArrayCensistas[], int lenZonas, int lenCensistas);
+int submenuCargaDatos(Zona* unaZona, Censista* unCensista);
 
 #endif /* CONTROLLER_H_ */
